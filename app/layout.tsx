@@ -15,14 +15,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
 
-        <body className="antialiased">
-          <div className="min-h-screen bg-background-default text-text-primary">
-            <ThemeRegistry>{children}</ThemeRegistry>
-          </div>
-        </body>
-   
+      <body className="antialiased">
+        <div className="min-h-screen bg-background-default text-text-primary">
+          <ThemeRegistry>{children}</ThemeRegistry>
+        </div>
+      </body>
+
     </html>
   );
 }
