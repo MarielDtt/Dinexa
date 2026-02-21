@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ThemeRegistry from "@/theme/ThemeRegistry";
+import { Poppins } from 'next/font/google';
 
 
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-poppins",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="es">
 
-      <body className="antialiased">
+      <body className={`antialiased ${poppins.variable} font-sans`}>
         <div className="min-h-screen bg-background-default text-text-primary">
           <ThemeRegistry>{children}</ThemeRegistry>
         </div>
