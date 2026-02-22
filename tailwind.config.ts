@@ -22,6 +22,7 @@ const config: Config = {
                 "accent-blue": '#26A4FF',
             },
             fontSize: {
+                'display-1': ['56px', { lineHeight: '60px', fontWeight: '700' }],
                 'display': ['36px', { lineHeight: '44px', fontWeight: '700' }],
                 'heading-1': ['28px', { lineHeight: '36px', fontWeight: '600' }],
                 'heading-2': ['22px', { lineHeight: '32px', fontWeight: '600' }],

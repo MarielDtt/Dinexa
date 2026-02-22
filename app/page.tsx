@@ -3,7 +3,7 @@ import Hero from "./components/sections/Hero";
 export default function Home() {
   return (
     <div className="flex flex-col gap-8">
-      <section id="inicio" className="min-h-150">
+      <section id="inicio">
         <Hero />
       </section>
 
