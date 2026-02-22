@@ -19,15 +19,20 @@ const config: Config = {
 
                 "accent-orange": "#F97404",
                 "accent-hover": "#E86703",
+                "accent-blue": '#26A4FF',
             },
             fontSize: {
-                display: ['36px', { lineHeight: '44px', fontWeight: '700' }],
+                'display': ['36px', { lineHeight: '44px', fontWeight: '700' }],
                 'heading-1': ['28px', { lineHeight: '36px', fontWeight: '600' }],
                 'heading-2': ['22px', { lineHeight: '32px', fontWeight: '600' }],
                 'body': ['16px', { lineHeight: '26px', fontWeight: '400' }],
+                'body-lg': ['18px', { lineHeight: '28.8px', fontWeight: '400' }],
                 'body-bold': ['16px', { lineHeight: '26px', fontWeight: '700' }],
                 'small-md': ['14px', { lineHeight: '22px', fontWeight: '400' }],
                 'small-sm': ['12px', { lineHeight: '20px', fontWeight: '400' }],
+            },
+            boxShadow: {
+                'hero': '0 4px 4px rgba(0,0,0,0.25)',
             }
         },
 

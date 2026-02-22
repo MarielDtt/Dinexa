@@ -4,7 +4,7 @@ type MenuOverlayProps = { onClose: () => void };
 
 export default function MenuOverlay({ onClose }: MenuOverlayProps) {
   return (
-    <div className="fixed inset-0 bg-black/40 z-[60]" onClick={onClose}>
+    <div className="fixed inset-0 bg-black/40 z-60" onClick={onClose}>
       <div
         className="w-[320px] ml-auto mr-4 mt-12 p-4 rounded-lg border border-border-soft bg-text-primary/90 flex flex-col items-center justify-between h-[418px]"
         onClick={(e) => e.stopPropagation()}
