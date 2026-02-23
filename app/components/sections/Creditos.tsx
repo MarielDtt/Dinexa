@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import type { SvgIconComponent } from "@mui/icons-material";
 
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
@@ -12,23 +13,134 @@ import MilitaryTechOutlinedIcon from "@mui/icons-material/MilitaryTechOutlined";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import CloseIcon from "@mui/icons-material/Close";
 
 import { Paper } from "@mui/material";
+import Button from "../ui/Button";
 
-const lineasCredito = [
-  { id: 1, title: "Docentes", subtitle: "CABA – Provincia BS AS", icon: SchoolOutlinedIcon, href: "/creditos/docentes", image: "/docente.webp" },
-  { id: 2, title: "Jubilados", subtitle: "ANSES – IPS – CBU", icon: ElderlyOutlinedIcon, href: "/creditos/jubilados", image: "/jubilados.webp" },
-  { id: 3, title: "Pensionados", subtitle: "Graciables – Madres - PUAM", icon: GroupsOutlinedIcon, href: "/creditos/pensionados", image: "/pensionado.webp" },
-  { id: 4, title: "Policía", subtitle: "CABA – Provincia BS AS", icon: LocalPoliceOutlinedIcon, href: "/creditos/policia", image: "/policia2.webp" },
-  { id: 5, title: "Fuerzas de Seguridad", subtitle: "Activos – Retirados", icon: MilitaryTechOutlinedIcon, href: "/creditos/fuerzas", image: "/fuerzas2.webp" },
-  { id: 6, title: "APN", subtitle: "Activos Nacionales", icon: AccountBalanceOutlinedIcon, href: "/creditos/apn", image: "/apn.webp" },
+type LineaCredito = {
+  id: number;
+  title: string;
+  subtitle: string;
+  icon: SvgIconComponent;
+  href: string;
+  image: string;
+  requirements: string[];
+};
+
+const lineasCredito: LineaCredito[] = [
+  {
+    id: 1,
+    title: "Docentes",
+    subtitle: "CABA - Provincia BS AS",
+    icon: SchoolOutlinedIcon,
+    href: "/creditos/docentes",
+    image: "/docente.webp",
+    requirements: [
+      "Ser empleado planta permanente de Institución de GCBA",
+      "Ser empleado planta permanente de Institución de PBA",
+      "Edad: Mujeres hasta 58 años / Varones hasta 63 años",
+    ],
+  },
+  {
+    id: 2,
+    title: "Jubilados",
+    subtitle: "ANSES - IPS - CBU",
+    icon: ElderlyOutlinedIcon,
+    href: "/creditos/jubilados",
+    image: "/jubilados.webp",
+    requirements: [
+      "Ser Jubilado o Pensionado (viudez) de ANSES",
+      "Ser Jubilado o Pensionado (viudez) de IPS Provincia BS AS",
+      "Edad: hasta 83 años",
+    ],
+  },
+  {
+    id: 3,
+    title: "Pensionados",
+    subtitle: "Graciable - Madres - PUAM",
+    icon: GroupsOutlinedIcon,
+    href: "/creditos/pensionados",
+    image: "/pensionado.webp",
+    requirements: [
+      "Ser beneficiario de una pensión Graciable de ANSES",
+      "Ser beneficiario de una pensión de Madres de 7 hijos",
+      "Ser beneficiario de una Pensión Universal de Adulto Mayor (PUAM)",
+      "Edad: hasta 83 años",
+    ],
+  },
+  {
+    id: 4,
+    title: "Policía",
+    subtitle: "CABA - Provincia BS AS",
+    icon: LocalPoliceOutlinedIcon,
+    href: "/creditos/policia",
+    image: "/policia2.webp",
+    requirements: [
+      "Ser empleado planta permanente de Policía de GCBA",
+      "Ser empleado planta permanente de Policía de PBA",
+      "Edad: Mujeres hasta 58 años / Varones hasta 63 años",
+    ],
+  },
+  {
+    id: 5,
+    title: "Fuerzas de Seguridad",
+    subtitle: "Activos - Retirados",
+    icon: MilitaryTechOutlinedIcon,
+    href: "/creditos/fuerzas",
+    image: "/fuerzas2.webp",
+    requirements: ["Consultar organismos vigentes", "No superar 30 años de servicios"],
+  },
+  {
+    id: 6,
+    title: "APN",
+    subtitle: "Activos Nacionales",
+    icon: AccountBalanceOutlinedIcon,
+    href: "/creditos/apn",
+    image: "/apn.webp",
+    requirements: [
+      "Ser empleado de un organismo nacional",
+      "Ser empleado planta permanente",
+      "Edad: Mujeres hasta 58 años / Varones hasta 63 años",
+    ],
+  },
 ];
 
 export default function Creditos() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedLine, setSelectedLine] = useState<LineaCredito | null>(null);
+
+  const openModal = (item: LineaCredito) => {
+    // Desktop: NO modal/overlay
+    if (typeof window !== "undefined" && window.matchMedia("(min-width: 1024px)").matches) return;
+
+    setSelectedLine(item);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedLine(null);
+  };
+
+  // Bloquear scroll del body con modal abierto
+  useEffect(() => {
+    if (!isModalOpen) return;
+    const prevHtml = document.documentElement.style.overflow;
+    const prevBody = document.body.style.overflow;
+
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.documentElement.style.overflow = prevHtml;
+      document.body.style.overflow = prevBody;
+    };
+  }, [isModalOpen]);
+
   return (
     <section className="w-full bg-background-default">
       <div className="mx-auto w-full max-w-[390px] px-4 pt-12 pb-4 flex flex-col gap-6 lg:max-w-[1200px] lg:px-6 lg:pt-16 lg:pb-16">
-        
         <h1 className="text-heading-2 text-text-primary text-center lg:text-left lg:text-display">
           Líneas de crédito <span className="text-accent-blue">disponibles</span>
         </h1>
@@ -43,6 +155,10 @@ export default function Creditos() {
                 <a
                   key={item.id}
                   href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    openModal(item);
+                  }}
                   className="flex items-center p-4 gap-8 w-full border border-border-soft bg-card-surface active:scale-[0.98] transition-transform"
                 >
                   <div className="w-12 h-12 flex items-center justify-center">
@@ -50,18 +166,11 @@ export default function Creditos() {
                   </div>
 
                   <div className="flex flex-col">
-                    <span className="text-body-bold text-text-primary">
-                      {item.title}
-                    </span>
-                    <span className="text-small-md text-text-secondary">
-                      {item.subtitle}
-                    </span>
+                    <span className="text-body-bold text-text-primary">{item.title}</span>
+                    <span className="text-small-md text-text-secondary">{item.subtitle}</span>
                   </div>
 
-                  <ArrowForwardIosIcon
-                    className="ml-auto text-accent-orange"
-                    sx={{ fontSize: 18 }}
-                  />
+                  <ArrowForwardIosIcon className="ml-auto text-accent-orange" sx={{ fontSize: 18 }} />
                 </a>
               );
             })}
@@ -74,7 +183,10 @@ export default function Creditos() {
         </div>
       </div>
 
-      {/* SCROLLBAR HIDE */}
+      {/* MODAL (solo mobile) */}
+      <CreditLineModal open={isModalOpen} line={selectedLine} onClose={closeModal} />
+
+      {/* SCROLLBAR HIDE (slider desktop horizontal) */}
       <style jsx global>{`
         .scrollbar-hide {
           -ms-overflow-style: none;
@@ -82,6 +194,18 @@ export default function Creditos() {
         }
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
+        }
+
+        /* Scrollbar naranja para el modal (vertical) */
+        .modal-scroll::-webkit-scrollbar {
+          width: 4px;
+        }
+        .modal-scroll::-webkit-scrollbar-thumb {
+          background: rgba(249, 116, 4, 0.6);
+          border-radius: 999px;
+        }
+        .modal-scroll::-webkit-scrollbar-track {
+          background: transparent;
         }
       `}</style>
     </section>
@@ -134,7 +258,6 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
 
   return (
     <div className="relative">
-      {/* Flechas */}
       {canLeft && (
         <button
           type="button"
@@ -155,7 +278,6 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
         </button>
       )}
 
-      {/* Slider */}
       <div
         ref={scrollerRef}
         className="flex w-full gap-8 overflow-x-auto pb-2 scrollbar-hide pr-14"
@@ -186,18 +308,11 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
               <div className="p-8">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex flex-col">
-                    <span className="text-heading-1 text-text-primary">
-                      {item.title}
-                    </span>
-                    <span className="text-body text-text-secondary mt-2">
-                      {item.subtitle}
-                    </span>
+                    <span className="text-heading-1 text-text-primary">{item.title}</span>
+                    <span className="text-body text-text-secondary mt-2">{item.subtitle}</span>
                   </div>
 
-                  <ArrowForwardIosIcon
-                    className="text-accent-orange"
-                    sx={{ fontSize: 18 }}
-                  />
+                  <ArrowForwardIosIcon className="text-accent-orange" sx={{ fontSize: 18 }} />
                 </div>
               </div>
             </Paper>
@@ -205,9 +320,110 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
         ))}
       </div>
 
-      <p className="mt-2 text-small-sm text-text-secondary">
-        Usá las flechas para ver más opciones.
-      </p>
+      <p className="mt-2 text-small-sm text-text-secondary">Usá las flechas para ver más opciones.</p>
+    </div>
+  );
+}
+
+function CreditLineModal({
+  open,
+  line,
+  onClose,
+}: {
+  open: boolean;
+  line: LineaCredito | null;
+  onClose: () => void;
+}) {
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const [showHint, setShowHint] = useState(false);
+
+  const computeHint = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const remaining = el.scrollHeight - (el.scrollTop + el.clientHeight);
+    setShowHint(remaining > 2);
+  };
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
+  useEffect(() => {
+    if (!open) return;
+    const id = window.requestAnimationFrame(() => computeHint());
+    return () => window.cancelAnimationFrame(id);
+  }, [open, line?.id]);
+
+  if (!open || !line) return null;
+
+  return (
+    <div className="fixed inset-0 z-[999] flex items-start justify-center pt-16 px-4" role="dialog" aria-modal="true">
+      {/* overlay */}
+      <button
+        type="button"
+        aria-label="Cerrar"
+        onClick={onClose}
+        className="absolute inset-0 bg-text-primary/60"
+      />
+
+      {/* modal */}
+      <div className="relative w-[355px] h-[410px] rounded-[8px] opacity-95 bg-text-primary overflow-hidden">
+        {/* header */}
+        <div className="px-6 pt-6 pb-4 relative">
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Cerrar modal"
+            className="absolute right-4 top-4 text-accent-orange hover:opacity-80 transition-opacity"
+          >
+            <CloseIcon />
+          </button>
+
+          <h2 className="text-heading-1 text-text-inverse">{line.title}</h2>
+          <p className="text-body text-text-inverse mt-2">{line.subtitle}</p>
+        </div>
+
+        {/* scroll area */}
+        <div className="relative px-6">
+          <div
+            ref={scrollRef}
+            onScroll={computeHint}
+            className="h-[250px] overflow-y-auto pr-2 modal-scroll"
+          >
+            <p className="text-body-bold text-text-inverse mt-4">REQUISITOS</p>
+
+            <ul className="mt-4 space-y-4 pb-16">
+              {line.requirements.map((req, idx) => (
+                <li key={idx} className="flex gap-3 text-body text-text-inverse">
+                  <span className="mt-[0.55rem] h-2 w-2 rounded-full bg-accent-orange shrink-0" />
+                  <span>{req}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* Hint sutil: aparece solo si hay scroll */}
+            {showHint && (
+              <div className="pb-2">
+                <p className="text-small-sm text-text-inverse/70 text-center">
+                  Deslizá para ver más ↓
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* footer sticky */}
+        <div className="absolute bottom-0 left-0 right-0 px-6 pb-8 pt-4 flex justify-center bg-text-primary">
+          <Button disabled className="w-full max-w-[240px]">
+            Iniciar chat
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
