@@ -1,3 +1,5 @@
+
+import Creditos from "./components/sections/Creditos";
 import Hero from "./components/sections/Hero";
 
 export default function Home() {
@@ -7,8 +9,8 @@ export default function Home() {
         <Hero />
       </section>
 
-      <section id="linea" className=" min-h-150">
-        Aca va la seccion Linea de credito
+      <section id="linea">
+        <Creditos />
       </section>
 
       <section id="entidades" className=" min-h-150">

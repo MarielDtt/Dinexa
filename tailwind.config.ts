@@ -15,7 +15,7 @@ const config: Config = {
 
                 "text-primary": "#062B3D",
                 "text-secondary": "#5E5B57",
-                "text-inverse": "#FFFFFF",
+                "text-inverse": "#F8F9FA",
 
                 "accent-orange": "#F97404",
                 "accent-hover": "#E86703",
