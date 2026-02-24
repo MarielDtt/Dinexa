@@ -145,7 +145,7 @@ export default function Creditos() {
           Líneas de crédito <span className="text-accent-blue">disponibles</span>
         </h1>
 
-        {/* ================= MOBILE ================= */}
+        {/* ================= MOBILE (NO TOCAR) ================= */}
         <div className="lg:hidden">
           <div className="flex flex-col gap-4 w-full">
             {lineasCredito.map((item) => {
@@ -207,6 +207,18 @@ export default function Creditos() {
         .modal-scroll::-webkit-scrollbar-track {
           background: transparent;
         }
+
+        /* Scrollbar naranja para requisitos en desktop (vertical) */
+        .card-req-scroll::-webkit-scrollbar {
+          width: 4px;
+        }
+        .card-req-scroll::-webkit-scrollbar-thumb {
+          background: rgba(249, 116, 4, 0.55);
+          border-radius: 999px;
+        }
+        .card-req-scroll::-webkit-scrollbar-track {
+          background: transparent;
+        }
       `}</style>
     </section>
   );
@@ -216,6 +228,8 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const [canLeft, setCanLeft] = useState(false);
   const [canRight, setCanRight] = useState(false);
+
+  const [openId, setOpenId] = useState<number | null>(null);
 
   const updateArrows = () => {
     const el = scrollerRef.current;
@@ -256,6 +270,8 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
     el.scrollBy({ left: dir === "left" ? -amount : amount, behavior: "smooth" });
   };
 
+  const toggle = (id: number) => setOpenId((prev) => (prev === id ? null : id));
+
   return (
     <div className="relative">
       {canLeft && (
@@ -283,47 +299,93 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
         className="flex w-full gap-8 overflow-x-auto pb-2 scrollbar-hide pr-14"
         style={{ scrollBehavior: "smooth" }}
       >
-        {items.map((item) => (
-          <a
-            key={item.id}
-            href={item.href}
-            data-slide-card="true"
-            className="min-w-[calc((100%-64px)/3)] active:scale-[0.98] transition-transform"
-          >
-            <Paper
-              variant="outlined"
-              className="h-full bg-card-surface border border-border-soft rounded-none overflow-hidden hover:shadow-hero transition-shadow"
-            >
-              <div className="relative h-[180px] w-full">
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  fill
-                  className="object-cover object-[center_35%]"
-                  sizes="(min-width: 1024px) 33vw"
-                  priority={item.id === 1}
-                />
-              </div>
+        {items.map((item) => {
+          const isOpen = openId === item.id;
 
-              <div className="p-8">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex flex-col">
-                    <span className="text-heading-1 text-text-primary">{item.title}</span>
-                    <span className="text-body text-text-secondary mt-2">{item.subtitle}</span>
+          return (
+            <div key={item.id} data-slide-card="true" className="min-w-[calc((100%-64px)/3)]">
+              <Paper
+                variant="outlined"
+                className="h-[410px] bg-card-surface border border-border-soft rounded-none overflow-hidden hover:shadow-hero transition-shadow"
+              >
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => toggle(item.id)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") toggle(item.id);
+                  }}
+                  className="h-full outline-none"
+                >
+                  {/* IMAGEN: se oculta cuando está abierto */}
+                  {!isOpen && (
+                    <div className="relative h-[180px] w-full transition-all duration-200">
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className="object-cover object-[center_35%]"
+                        sizes="(min-width: 1024px) 33vw"
+                        priority={item.id === 1}
+                      />
+                    </div>
+                  )}
+
+                  {/* BODY: cuando abre, ocupa todo el alto */}
+                  <div className={["p-8 flex flex-col", isOpen ? "h-[410px]" : "h-[230px]"].join(" ")}>
+                    {/* Header */}
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex flex-col">
+                        <span className="text-heading-1 text-text-primary">{item.title}</span>
+                        <span className="text-body text-text-secondary mt-2">{item.subtitle}</span>
+                      </div>
+
+                      <ArrowForwardIosIcon
+                        className="text-accent-orange transition-transform"
+                        sx={{ fontSize: 18, transform: isOpen ? "rotate(90deg)" : "rotate(0deg)" }}
+                      />
+                    </div>
+
+                    {/* Hint */}
+                    <div className="mt-4">
+                      <span className="text-small-sm text-accent-orange">
+                        {isOpen ? "Ocultar requisitos" : "Ver requisitos"}
+                      </span>
+                    </div>
+
+                    {/* Panel con scroll interno real */}
+                    {isOpen && (
+                      <div className="mt-4 border-t border-border-soft pt-4 flex flex-col flex-1 min-h-0">
+                        <p className="text-body-bold text-text-primary">REQUISITOS</p>
+
+                        <div className="mt-3 flex-1 min-h-0 overflow-y-auto pr-2 card-req-scroll">
+                          <ul className="space-y-3">
+                            {item.requirements.map((req, idx) => (
+                              <li key={idx} className="flex gap-3 text-body text-text-secondary">
+                                <span className="mt-[0.55rem] h-2 w-2 rounded-full bg-accent-orange shrink-0" />
+                                <span>{req}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="mt-auto" />
                   </div>
-
-                  <ArrowForwardIosIcon className="text-accent-orange" sx={{ fontSize: 18 }} />
                 </div>
-              </div>
-            </Paper>
-          </a>
-        ))}
+              </Paper>
+            </div>
+          );
+        })}
       </div>
 
       <p className="mt-2 text-small-sm text-text-secondary">Usá las flechas para ver más opciones.</p>
     </div>
   );
 }
+
+/* ================= MOBILE MODAL (NO TOCAR) ================= */
 
 function CreditLineModal({
   open,
@@ -363,7 +425,6 @@ function CreditLineModal({
 
   return (
     <div className="fixed inset-0 z-[999] flex items-start justify-center pt-16 px-4" role="dialog" aria-modal="true">
-      {/* overlay */}
       <button
         type="button"
         aria-label="Cerrar"
@@ -371,9 +432,7 @@ function CreditLineModal({
         className="absolute inset-0 bg-text-primary/60"
       />
 
-      {/* modal */}
       <div className="relative w-[355px] h-[410px] rounded-[8px] opacity-95 bg-text-primary overflow-hidden">
-        {/* header */}
         <div className="px-6 pt-6 pb-4 relative">
           <button
             type="button"
@@ -388,13 +447,8 @@ function CreditLineModal({
           <p className="text-body text-text-inverse mt-2">{line.subtitle}</p>
         </div>
 
-        {/* scroll area */}
         <div className="relative px-6">
-          <div
-            ref={scrollRef}
-            onScroll={computeHint}
-            className="h-[250px] overflow-y-auto pr-2 modal-scroll"
-          >
+          <div ref={scrollRef} onScroll={computeHint} className="h-[250px] overflow-y-auto pr-2 modal-scroll">
             <p className="text-body-bold text-text-inverse mt-4">REQUISITOS</p>
 
             <ul className="mt-4 space-y-4 pb-16">
@@ -406,18 +460,14 @@ function CreditLineModal({
               ))}
             </ul>
 
-            {/* Hint sutil: aparece solo si hay scroll */}
             {showHint && (
               <div className="pb-2">
-                <p className="text-small-sm text-text-inverse/70 text-center">
-                  Deslizá para ver más ↓
-                </p>
+                <p className="text-small-sm text-text-inverse/70 text-center">Deslizá para ver más ↓</p>
               </div>
             )}
           </div>
         </div>
 
-        {/* footer sticky */}
         <div className="absolute bottom-0 left-0 right-0 px-6 pb-8 pt-4 flex justify-center bg-text-primary">
           <Button disabled className="w-full max-w-[240px]">
             Iniciar chat

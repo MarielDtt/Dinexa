@@ -1,5 +1,6 @@
 
 import Creditos from "./components/sections/Creditos";
+import Entidades from "./components/sections/Entidades";
 import Hero from "./components/sections/Hero";
 
 export default function Home() {
@@ -14,7 +15,7 @@ export default function Home() {
       </section>
 
       <section id="entidades" className=" min-h-150">
-        Aca va la seccion Entidades
+       <Entidades />
       </section>
 
       <section id="pasos" className=" min-h-150">
