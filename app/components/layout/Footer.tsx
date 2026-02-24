@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import EmailIcon from "@mui/icons-material/Email";
@@ -38,11 +39,31 @@ export default function Footer() {
               </h3>
 
               <ul className="flex flex-col gap-3 text-text-inverse text-body-md opacity-90">
-                <li><a href="#linea">Jubilados ANSES</a></li>
-                <li><a href="#linea">Jubilados IPS</a></li>
-                <li><a href="#linea">Docentes</a></li>
-                <li><a href="#linea">Fuerzas de Seguridad</a></li>
-                <li><a href="#linea">Pensión Graciable</a></li>
+                <li>
+                  <a href="#linea" className="hover:text-accent-hover transition-colors duration-200">
+                    Jubilados ANSES
+                  </a>
+                </li>
+                <li>
+                  <a href="#linea" className="hover:text-accent-hover transition-colors duration-200">
+                    Jubilados IPS
+                  </a>
+                </li>
+                <li>
+                  <a href="#linea" className="hover:text-accent-hover transition-colors duration-200">
+                    Docentes
+                  </a>
+                </li>
+                <li>
+                  <a href="#linea" className="hover:text-accent-hover transition-colors duration-200">
+                    Fuerzas de Seguridad
+                  </a>
+                </li>
+                <li>
+                  <a href="#linea" className="hover:text-accent-hover transition-colors duration-200">
+                    Pensión Graciable
+                  </a>
+                </li>
               </ul>
             </div>
 
@@ -53,9 +74,24 @@ export default function Footer() {
               </h3>
 
               <ul className="flex flex-col gap-3 text-text-inverse text-body-md opacity-90">
-                <li><a href="#pasos">Cómo funciona</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-                <li>Términos y condiciones</li>
+                <li>
+                  <a href="#pasos" className="hover:text-accent-hover transition-colors duration-200">
+                    Cómo funciona
+                  </a>
+                </li>
+                <li>
+                  <a href="#contacto" className="hover:text-accent-hover transition-colors duration-200">
+                    Contacto
+                  </a>
+                </li>
+                <li>
+                  <Link
+                    href="/terminos-condiciones"
+                    className="hover:text-accent-hover transition-colors duration-200"
+                  >
+                    Términos y condiciones
+                  </Link>
+                </li>
                 <li>Política de privacidad</li>
               </ul>
             </div>
@@ -89,11 +125,31 @@ export default function Footer() {
             </h3>
 
             <ul className="flex flex-col gap-3 text-text-inverse text-body-md opacity-90">
-              <li><a href="#linea">Jubilados ANSES</a></li>
-              <li><a href="#linea">Jubilados IPS</a></li>
-              <li><a href="#linea">Docentes</a></li>
-              <li><a href="#linea">Fuerzas de Seguridad</a></li>
-              <li><a href="#linea">Pensión Graciable</a></li>
+              <li>
+                <a href="#linea" className="hover:text-accent-hover transition-colors duration-200">
+                  Jubilados ANSES
+                </a>
+              </li>
+              <li>
+                <a href="#linea" className="hover:text-accent-hover transition-colors duration-200">
+                  Jubilados IPS
+                </a>
+              </li>
+              <li>
+                <a href="#linea" className="hover:text-accent-hover transition-colors duration-200">
+                  Docentes
+                </a>
+              </li>
+              <li>
+                <a href="#linea" className="hover:text-accent-hover transition-colors duration-200">
+                  Fuerzas de Seguridad
+                </a>
+              </li>
+              <li>
+                <a href="#linea" className="hover:text-accent-hover transition-colors duration-200">
+                  Pensión Graciable
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -104,9 +160,24 @@ export default function Footer() {
             </h3>
 
             <ul className="flex flex-col gap-3 text-text-inverse text-body-md opacity-90">
-              <li><a href="#pasos">Cómo funciona</a></li>
-              <li><a href="#contacto">Contacto</a></li>
-              <li>Términos y condiciones</li>
+              <li>
+                <a href="#pasos" className="hover:text-accent-hover transition-colors duration-200">
+                  Cómo funciona
+                </a>
+              </li>
+              <li>
+                <a href="#contacto" className="hover:text-accent-hover transition-colors duration-200">
+                  Contacto
+                </a>
+              </li>
+              <li>
+                <Link
+                  href="/terminos-condiciones"
+                  className="hover:text-accent-hover transition-colors duration-200"
+                >
+                  Términos y condiciones
+                </Link>
+              </li>
               <li>Política de privacidad</li>
             </ul>
           </div>
@@ -129,7 +200,7 @@ export default function Footer() {
               target="_blank"
               rel="noreferrer"
               aria-label="Facebook Dinexa"
-              className="w-10 h-10 rounded-full border border-text-inverse/25 flex items-center justify-center text-text-inverse/90"
+              className="w-10 h-10 rounded-full border border-text-inverse/25 flex items-center justify-center text-text-inverse/90 hover:text-accent-hover hover:border-text-inverse/40 transition-colors duration-200"
             >
               <FacebookIcon fontSize="small" />
             </a>
@@ -139,7 +210,7 @@ export default function Footer() {
               target="_blank"
               rel="noreferrer"
               aria-label="Instagram Dinexa"
-              className="w-10 h-10 rounded-full border border-text-inverse/25 flex items-center justify-center text-text-inverse/90"
+              className="w-10 h-10 rounded-full border border-text-inverse/25 flex items-center justify-center text-text-inverse/90 hover:text-accent-hover hover:border-text-inverse/40 transition-colors duration-200"
             >
               <InstagramIcon fontSize="small" />
             </a>
@@ -147,7 +218,7 @@ export default function Footer() {
             <a
               href="mailto:dinexasf@gmail.com"
               aria-label="Enviar mail"
-              className="w-10 h-10 rounded-full border border-text-inverse/25 flex items-center justify-center text-text-inverse/90"
+              className="w-10 h-10 rounded-full border border-text-inverse/25 flex items-center justify-center text-text-inverse/90 hover:text-accent-hover hover:border-text-inverse/40 transition-colors duration-200"
             >
               <EmailIcon fontSize="small" />
             </a>
@@ -155,7 +226,7 @@ export default function Footer() {
             <a
               href="tel:+541154724032"
               aria-label="Llamar"
-              className="w-10 h-10 rounded-full border border-text-inverse/25 flex items-center justify-center text-text-inverse/90"
+              className="w-10 h-10 rounded-full border border-text-inverse/25 flex items-center justify-center text-text-inverse/90 hover:text-accent-hover hover:border-text-inverse/40 transition-colors duration-200"
             >
               <LocalPhoneIcon fontSize="small" />
             </a>
