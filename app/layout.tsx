@@ -3,6 +3,7 @@ import "./globals.css";
 import ThemeRegistry from "@/theme/ThemeRegistry";
 import Navbar from "./components/layout/Navbar";
 import { Poppins } from 'next/font/google';
+import Footer from "./components/layout/Footer";
 
 
 const poppins = Poppins({
@@ -32,6 +33,7 @@ export default function RootLayout({
           <ThemeRegistry>
             <Navbar />
             {children}
+            <Footer />
           </ThemeRegistry>
         </div>
       </body>
