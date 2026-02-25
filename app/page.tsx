@@ -20,7 +20,7 @@ export default function Home() {
       </section>
 
       <section id="pasos">
-        <Pasos/>
+        <Pasos />
       </section>
 
       <section id="quienes-somos" className="  min-h-150 ">
