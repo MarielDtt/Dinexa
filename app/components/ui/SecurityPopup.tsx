@@ -10,9 +10,7 @@ export default function SecurityPopup() {
   useEffect(() => {
     try {
       const closed = sessionStorage.getItem(STORAGE_KEY);
-      if (!closed) {
-        setTimeout(() => setIsVisible(true), 0);
-      }
+      if (!closed) setTimeout(() => setIsVisible(true), 0);
     } catch {
       setTimeout(() => setIsVisible(true), 0);
     }
@@ -28,21 +26,23 @@ export default function SecurityPopup() {
   if (!isVisible) return null;
 
   return (
-    <div className="sticky top-[60px] z-40 w-full px-4 mt-4">
-      <div className="mx-auto w-full max-w-[371px]">
-        <div className="flex flex-col gap-[10px] bg-Alert-Warning p-4 shadow-soft">
-
-          <div className="flex items-start justify-between gap-3">
-            <p className="text-small-md text-text-inverse leading-snug">
-              <span className="font-bold">DINEXA</span> nunca le solicitará pagos anticipados,
-              transferencias ni depósitos para gestionar o aprobar préstamos.
-              Tampoco solicita códigos, contraseñas ni claves bancarias.
-              Cualquier pedido de este tipo no proviene de{" "}
+    <div className="sticky top-[60px] z-40 w-full mt-4">
+      {/* Mobile: px-4 + max 371 | Desktop: container 1200 + px-8 */}
+      <div className="mx-auto w-full px-4 max-w-[371px] lg:max-w-[1200px] lg:px-8">
+        <div className="bg-Alert-Warning p-4 shadow-soft">
+          <div className="flex items-start justify-between gap-3 lg:items-center">
+            {/* Texto */}
+            <p className="text-small-md text-text-inverse leading-snug lg:text-body lg:max-w-[1020px]">
+              <span className="font-bold">DINEXA</span> nunca le solicitará pagos
+              anticipados, transferencias ni depósitos para gestionar o aprobar
+              préstamos. Tampoco solicita códigos, contraseñas ni claves
+              bancarias. Cualquier pedido de este tipo no proviene de{" "}
               <span className="font-bold">DINEXA</span> y constituye un intento
               de fraude. Comuníquese únicamente a través de los canales oficiales
               publicados en este sitio web.
             </p>
 
+            {/* Cerrar */}
             <button
               onClick={handleClose}
               aria-label="Cerrar aviso"
@@ -58,7 +58,6 @@ export default function SecurityPopup() {
               </svg>
             </button>
           </div>
-
         </div>
       </div>
     </div>
