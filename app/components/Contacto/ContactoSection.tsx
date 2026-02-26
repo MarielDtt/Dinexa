@@ -10,7 +10,7 @@ import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
-import Button from "../ui/Button"; // ajustá el path si tu Button está en otro lado
+import Button from "../ui/Button"; // ajustá el path si corresponde
 import {
   ContactoValues,
   validateContacto,
@@ -56,7 +56,7 @@ const PROVINCIAS = [
   { value: "la-pampa", label: "La Pampa" },
 ];
 
-export default function Contacto() {
+export default function ContactoSection() {
   const [values, setValues] = useState<ContactoValues>({
     nombre: "",
     telefono: "",
@@ -79,7 +79,6 @@ export default function Contacto() {
     setTouched((prev) => ({ ...prev, [field]: true }));
 
   const handleSubmit = () => {
-    // marcar todo touched
     setTouched({
       nombre: true,
       telefono: true,
@@ -92,15 +91,14 @@ export default function Contacto() {
     const finalErrors = validateContacto(values);
     if (Object.keys(finalErrors).length > 0) return;
 
-    // TODO: acá definís tu acción real (enviar a API / EmailJS / WhatsApp / etc.)
-    // Por ahora dejamos un placeholder seguro:
+    // TODO: acá conectás envío real (API/EmailJS/WhatsApp/etc)
     console.log("FORM OK:", values);
   };
 
+  // MUI styles (tokens hardcoded con tus colores)
   const commonTextFieldSx = {
     "& .MuiOutlinedInput-root": {
       borderRadius: "2px",
-      backgroundColor: "transparent",
       "& fieldset": { borderColor: "#B7B3AC" }, // border-soft
       "&:hover fieldset": { borderColor: "#062B3D" }, // text-primary
       "&.Mui-focused fieldset": { borderColor: "#F97404" }, // accent-orange
@@ -118,147 +116,198 @@ export default function Contacto() {
   return (
     <section
       id="contacto"
-     className="w-full bg-background-default flex flex-col items-center gap-8 px-4 py-6 mb-28"
+      className="
+        w-full bg-background-default
+        flex flex-col items-center gap-8 px-4 py-6
+        mb-28
+        lg:px-8 lg:py-8 lg:mb-32
+      "
     >
-      {/* Título */}
-      <h2 className="text-heading-2 text-text-primary">
-        ¿Querés que <span className="text-accent-blue">te contactemos</span>?
-      </h2>
+      {/* Container para controlar ancho en desktop */}
+      <div className="w-full lg:max-w-[1200px]">
+        {/* Título */}
+        <h2 className="text-heading-2 text-text-primary text-center lg:text-left">
+          ¿Querés que <span className="text-accent-blue">te contactemos</span>?
+        </h2>
 
-      {/* Form container */}
-      <div className="w-full max-w-[360px] flex flex-col items-stretch gap-8">
-        {/* Nombre */}
-        <TextField
-          fullWidth
-          size="small"
-          label="Ingrese Nombre y Apellido*"
-          value={values.nombre}
-          onChange={(e) => setValues((p) => ({ ...p, nombre: e.target.value }))}
-          onBlur={() => markTouched("nombre")}
-          error={showError("nombre")}
-          helperText={helper("nombre")}
-          sx={commonTextFieldSx}
-        />
-
-        {/* Teléfono */}
-        <TextField
-          fullWidth
-          size="small"
-          label="Ingrese Teléfono o WhatsApp*"
-          value={values.telefono}
-          onChange={(e) => setValues((p) => ({ ...p, telefono: e.target.value }))}
-          onBlur={() => markTouched("telefono")}
-          error={showError("telefono")}
-          helperText={helper("telefono")}
-          sx={commonTextFieldSx}
-        />
-
-        {/* Email */}
-        <TextField
-          fullWidth
-          size="small"
-          label="Email (opcional)"
-          value={values.email}
-          onChange={(e) => setValues((p) => ({ ...p, email: e.target.value }))}
-          onBlur={() => markTouched("email")}
-          error={showError("email")}
-          helperText={helper("email")}
-          sx={commonTextFieldSx}
-        />
-
-        {/* Actividad */}
-        <FormControl
-          fullWidth
-          size="small"
-          error={showError("actividad")}
-          sx={commonSelectSx}
-        >
-          <InputLabel id="actividad-label">Seleccione Actividad*</InputLabel>
-          <Select
-            labelId="actividad-label"
-            label="Seleccione Actividad*"
-            value={values.actividad}
-            onChange={(e) =>
-              setValues((p) => ({ ...p, actividad: String(e.target.value) }))
-            }
-            onBlur={() => markTouched("actividad")}
-          >
-            <MenuItem value="">
-              <em>Seleccione Actividad*</em>
-            </MenuItem>
-            {ACTIVIDADES.map((a) => (
-              <MenuItem key={a.value} value={a.value}>
-                {a.label}
-              </MenuItem>
-            ))}
-          </Select>
-          <FormHelperText>{helper("actividad")}</FormHelperText>
-        </FormControl>
-
-        {/* Provincia */}
-        <FormControl
-          fullWidth
-          size="small"
-          error={showError("provincia")}
-          sx={commonSelectSx}
-        >
-          <InputLabel id="provincia-label">Seleccione una Provincia</InputLabel>
-          <Select
-            labelId="provincia-label"
-            label="Seleccione una Provincia"
-            value={values.provincia}
-            onChange={(e) =>
-              setValues((p) => ({ ...p, provincia: String(e.target.value) }))
-            }
-            onBlur={() => markTouched("provincia")}
-          >
-            <MenuItem value="">
-              <em>Seleccione una Provincia</em>
-            </MenuItem>
-            {PROVINCIAS.map((p) => (
-              <MenuItem key={p.value} value={p.value}>
-                {p.label}
-              </MenuItem>
-            ))}
-          </Select>
-          <FormHelperText>{helper("provincia")}</FormHelperText>
-        </FormControl>
-
-        {/* Checkbox */}
-        <div className="flex flex-col gap-1">
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={values.aceptaWhatsApp}
-                onChange={(e) =>
-                  setValues((p) => ({ ...p, aceptaWhatsApp: e.target.checked }))
-                }
-                onBlur={() => markTouched("aceptaWhatsApp")}
-                sx={{
-                  color: "#B7B3AC",
-                  "&.Mui-checked": { color: "#F97404" },
-                }}
+        {/* Layout: mobile columna / desktop 2 columnas */}
+        <div className="mt-8 flex flex-col items-center gap-10 lg:mt-10 lg:grid lg:grid-cols-2 lg:items-start lg:gap-12">
+          {/* Columna izquierda: Form */}
+          <div className="w-full max-w-[360px] lg:max-w-[520px]">
+            <div className="w-full flex flex-col items-stretch gap-8">
+              <TextField
+                fullWidth
+                size="small"
+                label="Ingrese Nombre y Apellido*"
+                value={values.nombre}
+                onChange={(e) => setValues((p) => ({ ...p, nombre: e.target.value }))}
+                onBlur={() => markTouched("nombre")}
+                error={showError("nombre")}
+                helperText={helper("nombre")}
+                sx={commonTextFieldSx}
               />
-            }
-            label={
-              <span className="text-small-md text-text-primary">
-                Acepto recibir contacto por WhatsApp*
-              </span>
-            }
-          />
-          {showError("aceptaWhatsApp") ? (
-            <p className="text-small-sm text-[rgb(211,47,47)]">
-              {errors.aceptaWhatsApp}
-            </p>
-          ) : (
-            <p className="text-small-sm opacity-0">.</p>
-          )}
-        </div>
 
-        {/* CTA */}
-        <Button disabled={!isValid} onClick={handleSubmit} className="w-full">
-          Quiero que me contacten
-        </Button>
+              <TextField
+                fullWidth
+                size="small"
+                label="Ingrese Teléfono o WhatsApp*"
+                value={values.telefono}
+                onChange={(e) => setValues((p) => ({ ...p, telefono: e.target.value }))}
+                onBlur={() => markTouched("telefono")}
+                error={showError("telefono")}
+                helperText={helper("telefono")}
+                sx={commonTextFieldSx}
+              />
+
+              <TextField
+                fullWidth
+                size="small"
+                label="Email (opcional)"
+                value={values.email}
+                onChange={(e) => setValues((p) => ({ ...p, email: e.target.value }))}
+                onBlur={() => markTouched("email")}
+                error={showError("email")}
+                helperText={helper("email")}
+                sx={commonTextFieldSx}
+              />
+
+              <FormControl
+                fullWidth
+                size="small"
+                error={showError("actividad")}
+                sx={commonSelectSx}
+              >
+                <InputLabel id="actividad-label">Seleccione Actividad*</InputLabel>
+                <Select
+                  labelId="actividad-label"
+                  label="Seleccione Actividad*"
+                  value={values.actividad}
+                  onChange={(e) =>
+                    setValues((p) => ({ ...p, actividad: String(e.target.value) }))
+                  }
+                  onBlur={() => markTouched("actividad")}
+                >
+                  <MenuItem value="">
+                    <em>Seleccione Actividad*</em>
+                  </MenuItem>
+                  {ACTIVIDADES.map((a) => (
+                    <MenuItem key={a.value} value={a.value}>
+                      {a.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText>{helper("actividad")}</FormHelperText>
+              </FormControl>
+
+              <FormControl
+                fullWidth
+                size="small"
+                error={showError("provincia")}
+                sx={commonSelectSx}
+              >
+                <InputLabel id="provincia-label">Seleccione una Provincia</InputLabel>
+                <Select
+                  labelId="provincia-label"
+                  label="Seleccione una Provincia"
+                  value={values.provincia}
+                  onChange={(e) =>
+                    setValues((p) => ({ ...p, provincia: String(e.target.value) }))
+                  }
+                  onBlur={() => markTouched("provincia")}
+                >
+                  <MenuItem value="">
+                    <em>Seleccione una Provincia</em>
+                  </MenuItem>
+                  {PROVINCIAS.map((p) => (
+                    <MenuItem key={p.value} value={p.value}>
+                      {p.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText>{helper("provincia")}</FormHelperText>
+              </FormControl>
+
+              <div className="flex flex-col gap-1">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={values.aceptaWhatsApp}
+                      onChange={(e) =>
+                        setValues((p) => ({ ...p, aceptaWhatsApp: e.target.checked }))
+                      }
+                      onBlur={() => markTouched("aceptaWhatsApp")}
+                      sx={{
+                        color: "#B7B3AC",
+                        "&.Mui-checked": { color: "#F97404" },
+                      }}
+                    />
+                  }
+                  label={
+                    <span className="text-small-md text-text-primary">
+                      Acepto recibir contacto por WhatsApp*
+                    </span>
+                  }
+                />
+
+                {showError("aceptaWhatsApp") ? (
+                  <p className="text-small-sm text-[rgb(211,47,47)]">
+                    {errors.aceptaWhatsApp}
+                  </p>
+                ) : (
+                  <p className="text-small-sm opacity-0">.</p>
+                )}
+              </div>
+
+              <Button disabled={!isValid} onClick={handleSubmit} className="w-full">
+                Quiero que me contacten
+              </Button>
+            </div>
+          </div>
+
+          {/* Columna derecha: SOLO desktop */}
+          <aside className="hidden lg:block">
+            <div className="w-full max-w-[520px]">
+              <div className="bg-card-surface border border-border-soft rounded p-8 flex flex-col gap-6">
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-heading-2 text-text-primary">
+                    Atención personalizada
+                  </h3>
+                  <p className="text-body text-text-secondary">
+                    Completá el formulario y un asesor de Dinexa se comunica con vos
+                    para guiarte según tu actividad y provincia.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4">
+                  <div className="rounded border border-border-soft bg-background-default p-4">
+                    <p className="text-body-bold text-text-primary">Respuesta rápida</p>
+                    <p className="text-small-md text-text-secondary">
+                      Te contactamos a la brevedad para ayudarte con requisitos y pasos.
+                    </p>
+                  </div>
+
+                  <div className="rounded border border-border-soft bg-background-default p-4">
+                    <p className="text-body-bold text-text-primary">Por WhatsApp</p>
+                    <p className="text-small-md text-text-secondary">
+                      Si aceptás el contacto por WhatsApp, agilizamos el seguimiento.
+                    </p>
+                  </div>
+
+                  <div className="rounded border border-border-soft bg-background-default p-4">
+                    <p className="text-body-bold text-text-primary">Información clara</p>
+                    <p className="text-small-md text-text-secondary">
+                      Te informamos disponibilidad, documentación y condiciones según tu perfil.
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-small-sm text-text-secondary">
+                  * Campos obligatorios para poder contactarte.
+                </p>
+              </div>
+            </div>
+          </aside>
+        </div>
       </div>
     </section>
   );
