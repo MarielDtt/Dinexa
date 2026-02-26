@@ -3,6 +3,7 @@ import Creditos from "./components/sections/Creditos";
 import Entidades from "./components/sections/Entidades";
 import Hero from "./components/sections/Hero";
 import Pasos from "./components/sections/Pasos";
+import QuienesSomos from "./components/sections/QuienesSomos";
 
 export default function Home() {
   return (
@@ -24,7 +25,7 @@ export default function Home() {
       </section>
 
       <section id="quienes-somos" className="  min-h-150 ">
-        Aca va la seccion Quienes somos
+      <QuienesSomos/>
       </section>
 
       <section id="contacto" className=" min-h-150">
