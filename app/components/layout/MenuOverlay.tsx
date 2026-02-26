@@ -10,19 +10,69 @@ export default function MenuOverlay({ onClose }: MenuOverlayProps) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between w-full">
-          <Image src="/DinexaOrange2.webp" alt="Dinexa" width={116} height={40} />
-          <button onClick={onClose} className="text-accent-orange text-2xl leading-none" aria-label="Cerrar menú">
+          <Image
+            src="/DinexaOrange2.webp"
+            alt="Dinexa"
+            width={116}
+            height={40}
+          />
+          <button
+            onClick={onClose}
+            className="text-accent-orange text-2xl leading-none"
+            aria-label="Cerrar menú"
+          >
             ×
           </button>
         </div>
 
         <div className="flex flex-col items-center gap-6 flex-1 justify-center">
-          <a href="#inicio" className="text-text-inverse text-heading-2">Inicio</a>
-          <a href="#linea" className="text-text-inverse text-heading-2">Líneas de crédito</a>
-          <a href="#entidades" className="text-text-inverse text-heading-2">Entidades</a>
-          <a href="#pasos" className="text-text-inverse text-heading-2">Tres simples pasos</a>
-          <a href="#quienes-somos" className="text-text-inverse text-heading-2">¿Quiénes somos?</a>
-          <a href="#contacto" className="text-text-inverse text-heading-2">Contactos</a>
+          <a
+            href="#inicio"
+            onClick={onClose}
+            className="text-text-inverse text-heading-2"
+          >
+            Inicio
+          </a>
+
+          <a
+            href="#linea"
+            onClick={onClose}
+            className="text-text-inverse text-heading-2"
+          >
+            Líneas de crédito
+          </a>
+
+          <a
+            href="#entidades"
+            onClick={onClose}
+            className="text-text-inverse text-heading-2"
+          >
+            Entidades
+          </a>
+
+          <a
+            href="#pasos"
+            onClick={onClose}
+            className="text-text-inverse text-heading-2"
+          >
+            Tres simples pasos
+          </a>
+
+          <a
+            href="#quienes-somos"
+            onClick={onClose}
+            className="text-text-inverse text-heading-2"
+          >
+            ¿Quiénes somos?
+          </a>
+
+          <a
+            href="#contacto"
+            onClick={onClose}
+            className="text-text-inverse text-heading-2"
+          >
+            Contactos
+          </a>
         </div>
       </div>
     </div>

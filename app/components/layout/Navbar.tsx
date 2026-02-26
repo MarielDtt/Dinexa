@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -29,7 +29,10 @@ export default function Navbar() {
       (entries) => {
         const visible = entries
           .filter((e) => e.isIntersecting)
-          .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
+          .sort(
+            (a, b) =>
+              (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0)
+          )[0];
 
         if (visible?.target?.id) setActiveSection(visible.target.id);
       },
@@ -39,6 +42,8 @@ export default function Navbar() {
     elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
+
+  const handleCloseMenu = () => setIsMenuOpen(false);
 
   return (
     <nav className="relative sticky top-0 z-50 w-full bg-background-default">
@@ -126,9 +131,7 @@ export default function Navbar() {
 
         {/* BOTÓN (derecha, solo desktop) */}
         <div className="hidden lg:block">
-          <Button className="w-[160px] h-12 !px-6 text-body">
-            Contactar
-          </Button>
+          <Button className="w-[160px] h-12 !px-6 text-body">Contactar</Button>
         </div>
 
         {/* HAMBURGUESA (mobile) */}
@@ -143,7 +146,7 @@ export default function Navbar() {
         {/* OVERLAY (mobile) */}
         {isMenuOpen && (
           <div className="absolute top-full right-0 z-50 lg:hidden">
-            <MenuOverlay onClose={() => setIsMenuOpen(false)} />
+            <MenuOverlay onClose={handleCloseMenu} />
           </div>
         )}
       </div>
