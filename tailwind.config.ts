@@ -20,6 +20,8 @@ const config: Config = {
                 "accent-orange": "#F97404",
                 "accent-hover": "#E86703",
                 "accent-blue": '#26A4FF',
+
+                "Alert-Warning": "#C62828",
             },
             fontSize: {
                 'display-1': ['56px', { lineHeight: '60px', fontWeight: '700' }],
@@ -34,6 +36,7 @@ const config: Config = {
             },
             boxShadow: {
                 'hero': '0 4px 4px rgba(0,0,0,0.25)',
+                "soft": "0 4px 4px 0 rgba(0, 0, 0, 0.10)",
             }
         },
 

@@ -5,10 +5,14 @@ import Entidades from "./components/sections/Entidades";
 import Hero from "./components/sections/Hero";
 import Pasos from "./components/sections/Pasos";
 import QuienesSomos from "./components/sections/QuienesSomos";
+import SecurityPopup from "./components/ui/SecurityPopup";
 
 export default function Home() {
   return (
     <div className="flex flex-col gap-8">
+
+      <SecurityPopup />
+
       <section id="inicio">
         <Hero />
       </section>
@@ -18,7 +22,7 @@ export default function Home() {
       </section>
 
       <section id="entidades">
-       <Entidades />
+        <Entidades />
       </section>
 
       <section id="pasos">
@@ -26,12 +30,12 @@ export default function Home() {
       </section>
 
       <section id="quienes-somos">
-      <QuienesSomos/>
+        <QuienesSomos />
       </section>
 
       <section id="contacto">
         <Contacto />
-      </section>  
+      </section>
     </div>
   );
 }
