@@ -24,11 +24,11 @@ export default function Home() {
         <Pasos />
       </section>
 
-      <section id="quienes-somos" className="  min-h-150 ">
+      <section id="quienes-somos">
       <QuienesSomos/>
       </section>
 
-      <section id="contacto" className=" min-h-150">
+      <section id="contacto">
         Aca va la seccion Contacto
       </section>  
     </div>

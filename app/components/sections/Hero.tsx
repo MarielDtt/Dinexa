@@ -11,7 +11,7 @@ export default function Hero() {
 
                 {/* Columna izquierda: texto */}
                 <div className="flex flex-col gap-4 lg:py-8">
-                    <h1 className="text-heading-1 text-text-primary lg:text-display-1">
+                    <h1 className="text-display text-text-primary lg:text-display-1">
                         Te acompañamos <br />
                         a encontrar el <br />
                         <span className="text-accent-blue">crédito que necesitás</span>
