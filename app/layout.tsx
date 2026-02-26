@@ -4,6 +4,7 @@ import ThemeRegistry from "@/theme/ThemeRegistry";
 import Navbar from "./components/layout/Navbar";
 import { Poppins } from 'next/font/google';
 import Footer from "./components/layout/Footer";
+import ChatButton from "./components/ui/ChatButton";
 
 
 const poppins = Poppins({
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
   title: "Dinexa SF",
   description: "Dinexa soluciones financieras",
   icons: {
-    icon: "/favicon.ico", 
+    icon: "/favicon.ico",
   },
 };
 export default function RootLayout({
@@ -34,6 +35,7 @@ export default function RootLayout({
             <Navbar />
             {children}
             <Footer />
+            <ChatButton />
           </ThemeRegistry>
         </div>
       </body>
