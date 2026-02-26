@@ -120,16 +120,15 @@ export default function ContactoSection() {
         w-full bg-background-default
         flex flex-col items-center gap-8 px-4 py-6
         mb-28
-        lg:px-8 lg:py-8 lg:mb-32
+        lg:px-8 lg:py-6 lg:mb-32
       "
     >
       {/* Container para controlar ancho en desktop */}
       <div className="w-full lg:max-w-[1200px]">
         {/* Título */}
-        <h2 className="text-heading-2 text-text-primary text-center lg:text-left">
-          ¿Querés que <span className="text-accent-blue">te contactemos</span>?
+        <h2 className="text-heading-1 text-text-primary text-center lg:text-left whitespace-nowrap overflow-hidden text-ellipsis">
+          ¿Te <span className="text-accent-blue">contamos</span>?
         </h2>
-
         {/* Layout: mobile columna / desktop 2 columnas */}
         <div className="mt-8 flex flex-col items-center gap-10 lg:mt-10 lg:grid lg:grid-cols-2 lg:items-start lg:gap-12">
           {/* Columna izquierda: Form */}
