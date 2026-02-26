@@ -27,6 +27,7 @@ const ACTIVIDADES = [
   { value: "policia", label: "Policía" },
   { value: "fuerzas", label: "Fuerzas de seguridad" },
   { value: "apn", label: "APN" },
+    { value: "auh", label: "AUH" },
   { value: "otro", label: "Otro" },
 ];
 
