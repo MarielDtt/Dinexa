@@ -1,4 +1,5 @@
 
+import Contacto from "./components/Contacto/ContactoSection";
 import Creditos from "./components/sections/Creditos";
 import Entidades from "./components/sections/Entidades";
 import Hero from "./components/sections/Hero";
@@ -29,7 +30,7 @@ export default function Home() {
       </section>
 
       <section id="contacto">
-        Aca va la seccion Contacto
+        <Contacto />
       </section>  
     </div>
   );
