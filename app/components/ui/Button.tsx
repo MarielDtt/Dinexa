@@ -19,6 +19,7 @@ export default function Button({
 }: ButtonProps) {
   const baseClasses = [
     "inline-flex items-center justify-center gap-2.5",
+    "text-center whitespace-nowrap leading-none min-h-12",
     "px-10 py-4",
     "bg-accent-orange text-text-inverse rounded",
     "hover:bg-accent-hover",
