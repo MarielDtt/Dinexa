@@ -109,18 +109,25 @@ const lineasCredito: LineaCredito[] = [
 export default function Creditos() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedLine, setSelectedLine] = useState<LineaCredito | null>(null);
+  const [isClosing, setIsClosing] = useState(false);
 
   const openModal = (item: LineaCredito) => {
     // Desktop: NO modal/overlay
     if (typeof window !== "undefined" && window.matchMedia("(min-width: 1024px)").matches) return;
 
+    setIsClosing(false);
     setSelectedLine(item);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedLine(null);
+    setIsClosing(true);
+
+    window.setTimeout(() => {
+      setIsModalOpen(false);
+      setSelectedLine(null);
+      setIsClosing(false);
+    }, 320); // coincide con duration-300
   };
 
   // Bloquear scroll del body con modal abierto
@@ -145,7 +152,7 @@ export default function Creditos() {
           Líneas de crédito <span className="text-accent-blue">disponibles</span>
         </h1>
 
-        {/* ================= MOBILE (NO TOCAR) ================= */}
+        {/* ================= MOBILE ================= */}
         <div className="lg:hidden">
           <div className="flex flex-col gap-4 w-full">
             {lineasCredito.map((item) => {
@@ -184,7 +191,7 @@ export default function Creditos() {
       </div>
 
       {/* MODAL (solo mobile) */}
-      <CreditLineModal open={isModalOpen} line={selectedLine} onClose={closeModal} />
+      <CreditLineModal open={isModalOpen} closing={isClosing} line={selectedLine} onClose={closeModal} />
 
       {/* SCROLLBAR HIDE (slider desktop horizontal) */}
       <style jsx global>{`
@@ -317,7 +324,6 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
                   }}
                   className="h-full outline-none"
                 >
-                  {/* IMAGEN: se oculta cuando está abierto */}
                   {!isOpen && (
                     <div className="relative h-[180px] w-full transition-all duration-200">
                       <Image
@@ -331,9 +337,7 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
                     </div>
                   )}
 
-                  {/* BODY: cuando abre, ocupa todo el alto */}
                   <div className={["p-8 flex flex-col", isOpen ? "h-[410px]" : "h-[230px]"].join(" ")}>
-                    {/* Header */}
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex flex-col">
                         <span className="text-heading-1 text-text-primary">{item.title}</span>
@@ -346,14 +350,12 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
                       />
                     </div>
 
-                    {/* Hint */}
                     <div className="mt-4">
                       <span className="text-small-sm text-accent-orange">
                         {isOpen ? "Ocultar requisitos" : "Ver requisitos"}
                       </span>
                     </div>
 
-                    {/* Panel con scroll interno real */}
                     {isOpen && (
                       <div className="mt-4 border-t border-border-soft pt-4 flex flex-col flex-1 min-h-0">
                         <p className="text-body-bold text-text-primary">REQUISITOS</p>
@@ -385,19 +387,23 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
   );
 }
 
-/* ================= MOBILE MODAL (NO TOCAR) ================= */
+/* ================= MOBILE MODAL ANIMADO ================= */
 
 function CreditLineModal({
   open,
+  closing,
   line,
   onClose,
 }: {
   open: boolean;
+  closing: boolean;
   line: LineaCredito | null;
   onClose: () => void;
 }) {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const [showHint, setShowHint] = useState(false);
+
+  const [animateIn, setAnimateIn] = useState(false);
 
   const computeHint = () => {
     const el = scrollRef.current;
@@ -421,7 +427,27 @@ function CreditLineModal({
     return () => window.cancelAnimationFrame(id);
   }, [open, line?.id]);
 
-  if (!open || !line) return null;
+  // Animación de entrada sin warning del linter:
+  // - Se activa visible en el próximo frame
+  // - Se resetea al desmontar/cerrar
+  useEffect(() => {
+    if (!open) return;
+
+    const id = window.requestAnimationFrame(() => {
+      setAnimateIn(true);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(id);
+      setAnimateIn(false);
+    };
+  }, [open, line?.id]);
+
+  // Mantener montado mientras anima salida
+  if (!line) return null;
+  if (!open && !closing) return null;
+
+  const isVisible = open && animateIn && !closing;
 
   return (
     <div className="fixed inset-0 z-[999] flex items-start justify-center pt-16 px-4" role="dialog" aria-modal="true">
@@ -429,10 +455,20 @@ function CreditLineModal({
         type="button"
         aria-label="Cerrar"
         onClick={onClose}
-        className="absolute inset-0 bg-text-primary/60"
+        className={[
+          "absolute inset-0 bg-text-primary/60 backdrop-blur-[2px]",
+          "transition-opacity duration-300 ease-out",
+          isVisible ? "opacity-100" : "opacity-0",
+        ].join(" ")}
       />
 
-      <div className="relative w-[355px] h-[410px] rounded-[8px] opacity-95 bg-text-primary overflow-hidden">
+      <div
+        className={[
+          "relative w-[355px] h-[410px] rounded-[8px] bg-text-primary overflow-hidden",
+          "transition-all duration-300 ease-out will-change-transform",
+          isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-6 scale-[0.96]",
+        ].join(" ")}
+      >
         <div className="px-6 pt-6 pb-4 relative">
           <button
             type="button"

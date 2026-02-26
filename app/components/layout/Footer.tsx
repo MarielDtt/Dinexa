@@ -7,7 +7,7 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-text-primary">
+    <footer className="w-full bg-text-primary" id="site-footer">
       {/* TOP */}
       <div className="px-4 py-10 flex flex-col gap-6 lg:max-w-[1200px] lg:mx-auto lg:px-8 lg:py-12">
         
