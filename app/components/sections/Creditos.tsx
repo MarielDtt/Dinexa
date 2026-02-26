@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import type { SvgIconComponent } from "@mui/icons-material";
+import { FamilyRestroomOutlined, type SvgIconComponent } from "@mui/icons-material";
 
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
@@ -102,6 +102,19 @@ const lineasCredito: LineaCredito[] = [
       "Ser empleado de un organismo nacional",
       "Ser empleado planta permanente",
       "Edad: Mujeres hasta 58 años / Varones hasta 63 años",
+    ],
+  },
+    {
+    id: 7,
+    title: "AUH",
+    subtitle: "Asignación Universal por Hijo",
+    icon: FamilyRestroomOutlined,
+    href: "/creditos/auh",
+    image: "/auh.webp",
+    requirements: [
+      "Ser beneficiario de la Asignación Universal por Hijo (AUH) de ANSES",
+      "Cobrar haberes por banco mediante CBU",
+      "Sin historial crediticio negativo",
     ],
   },
 ];

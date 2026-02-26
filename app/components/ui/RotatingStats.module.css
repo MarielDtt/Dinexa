@@ -1,4 +1,6 @@
 .carousel {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   position: relative;
   width: 320px;
   height: 220px;
@@ -94,3 +96,4 @@
   align-items: center;
   justify-content: center;
 }
+

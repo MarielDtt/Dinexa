@@ -25,7 +25,7 @@ export default function Home() {
         <Entidades />
       </section>
 
-      <section id="pasos">
+      <section id="pasos" >
         <Pasos />
       </section>
 
