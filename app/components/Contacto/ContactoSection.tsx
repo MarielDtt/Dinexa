@@ -9,7 +9,7 @@ import InputLabel from "@mui/material/InputLabel";
 import FormHelperText from "@mui/material/FormHelperText";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-
+import emailjs from "@emailjs/browser";
 import Button from "../ui/Button";
 import SuccessModal from "../ui/SuccessModal";
 import {
@@ -27,7 +27,7 @@ const ACTIVIDADES = [
   { value: "policia", label: "Policía" },
   { value: "fuerzas", label: "Fuerzas de seguridad" },
   { value: "apn", label: "APN" },
-    { value: "auh", label: "AUH" },
+  { value: "auh", label: "AUH" },
   { value: "otro", label: "Otro" },
 ];
 
@@ -86,7 +86,10 @@ export default function ContactoSection() {
   const markTouched = (field: keyof ContactoValues) =>
     setTouched((prev) => ({ ...prev, [field]: true }));
 
-  const handleSubmit = () => {
+
+  const handleSubmit = async () => {
+
+
     setTouched({
       nombre: true,
       telefono: true,
@@ -99,11 +102,39 @@ export default function ContactoSection() {
     const finalErrors = validateContacto(values);
     if (Object.keys(finalErrors).length > 0) return;
 
-    // TODO: acá conectás envío real (API/EmailJS/WhatsApp/etc)
-    console.log("FORM OK:", values);
+    try {
+  
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        {
+          nombre: values.nombre,
+          telefono: values.telefono,
+          email: values.email,
+          actividad: values.actividad,
+          provincia: values.provincia,
+          aceptaWhatsApp: values.aceptaWhatsApp ? "Sí" : "No",
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      );
+      setSuccessOpen(true);
 
-    // ✅ abre modal de éxito
-    setSuccessOpen(true);
+
+      setValues({
+        nombre: "",
+        telefono: "",
+        email: "",
+        actividad: "",
+        provincia: "",
+        aceptaWhatsApp: false,
+      });
+
+      setTouched({});
+    } catch (error) {
+      console.error("Error enviando email:", error);
+      alert("Ocurrió un error al enviar el formulario. Intentá nuevamente.");
+    }
+
   };
 
   const handleCloseSuccess = () => {
@@ -290,7 +321,7 @@ export default function ContactoSection() {
                     }
                     label={
                       <span className="text-small-md text-text-primary">
-                        Acepto recibir contacto por WhatsApp*
+                        Acepto recibir contacto por WhatsApp
                       </span>
                     }
                   />

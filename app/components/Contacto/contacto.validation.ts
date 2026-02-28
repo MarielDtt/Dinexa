@@ -40,10 +40,7 @@ export function validateContacto(values: ContactoValues): ContactoErrors {
   // Provincia*
   if (!values.provincia) errors.provincia = "Seleccioná una provincia.";
 
-  // Acepto WhatsApp*
-  if (!values.aceptaWhatsApp) {
-    errors.aceptaWhatsApp = "Tenés que aceptar para que te contactemos por WhatsApp.";
-  }
+  // aceptaWhatsApp: opcional (NO valida)
 
   return errors;
 }
