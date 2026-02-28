@@ -25,6 +25,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const crispId = process.env.NEXT_PUBLIC_CRISP_WEBSITE_ID;
+
   return (
     <html lang="es">
       <body className={`antialiased ${poppins.variable} font-sans`}>
@@ -34,23 +36,25 @@ export default function RootLayout({
             {children}
             <Footer />
 
-            <Script
-              id="crisp-chat"
-              strategy="afterInteractive"
-              dangerouslySetInnerHTML={{
-                __html: `
-                  window.$crisp = window.$crisp || [];
-                  window.CRISP_WEBSITE_ID = "f9d5cff0-6256-4460-9618-f803a41fbde2";
-                  (function() {
-                    var d = document;
-                    var s = d.createElement("script");
-                    s.src = "https://client.crisp.chat/l.js";
-                    s.async = 1;
-                    d.getElementsByTagName("head")[0].appendChild(s);
-                  })();
-                `,
-              }}
-            />
+            {crispId ? (
+              <Script
+                id="crisp-chat"
+                strategy="afterInteractive"
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    window.$crisp = window.$crisp || [];
+                    window.CRISP_WEBSITE_ID = "${crispId}";
+                    (function() {
+                      var d = document;
+                      var s = d.createElement("script");
+                      s.src = "https://client.crisp.chat/l.js";
+                      s.async = 1;
+                      d.getElementsByTagName("head")[0].appendChild(s);
+                    })();
+                  `,
+                }}
+              />
+            ) : null}
           </ThemeRegistry>
         </div>
       </body>
