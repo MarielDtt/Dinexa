@@ -21,3 +21,24 @@ img {
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+
+/* 1) En mobile: reset (asegura que NO quede fuera de pantalla) */
+@media (max-width: 1023px) {
+  #crisp-chatbox {
+    right: 16px !important;
+    left: auto !important;
+    bottom: 16px !important;
+    transform: none !important;
+  }
+}
+
+/* 2) En desktop: alineado al container 1200px */
+@media (min-width: 1024px) {
+  #crisp-chatbox {
+    right: calc((100vw - 1200px) / 2 + 32px) !important;
+    left: auto !important;
+    bottom: 32px !important;
+    transform: none !important;
+  }
+}
