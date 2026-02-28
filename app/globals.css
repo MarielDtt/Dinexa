@@ -1,7 +1,9 @@
 @config "../tailwind.config.ts";
 @import "tailwindcss";
 
-/* === Base Layer === */
+/* ========================= */
+/*        BASE LAYER         */
+/* ========================= */
 
 *,
 *::before,
@@ -23,22 +25,43 @@ img {
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 
-/* 1) En mobile: reset (asegura que NO quede fuera de pantalla) */
+/* ========================= */
+/*        CRISP CHAT         */
+/* ========================= */
+
+/* Variables ajustables */
+:root {
+  --crisp-bottom-mobile: 460px;      /* Mucho más arriba en mobile */
+  --crisp-bottom-desktop: 460px;     /* Más arriba en desktop */
+  --crisp-right-mobile: 16px;
+  --crisp-right-desktop: calc((100vw - 1200px) / 2 + 64px); 
+  /* Más a la derecha en desktop */
+}
+
+/* Siempre visible por encima */
+#crisp-chatbox,
+.crisp-client {
+  z-index: 999999 !important;
+  left: auto !important;
+  transform: none !important;
+}
+
+/* MOBILE */
 @media (max-width: 1023px) {
-  #crisp-chatbox {
-    right: 16px !important;
-    left: auto !important;
-    bottom: 16px !important;
-    transform: none !important;
+  #crisp-chatbox,
+  .crisp-client,
+  .crisp-client [class*="cc-"] {
+    right: var(--crisp-right-mobile) !important;
+    bottom: var(--crisp-bottom-mobile) !important;
   }
 }
 
-/* 2) En desktop: alineado al container 1200px */
+/* DESKTOP */
 @media (min-width: 1024px) {
-  #crisp-chatbox {
-    right: calc((100vw - 1200px) / 2 + 32px) !important;
-    left: auto !important;
-    bottom: 32px !important;
-    transform: none !important;
+  #crisp-chatbox,
+  .crisp-client,
+  .crisp-client [class*="cc-"] {
+    right: 24px !important;   /* Pegado al borde derecho */
+    bottom: 340px !important; /* La altura que ya definiste */
   }
 }
