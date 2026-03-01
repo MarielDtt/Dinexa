@@ -21,6 +21,31 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Paper } from "@mui/material";
 import Button from "../ui/Button";
 
+/* ================= Crisp: types + helper (sin any) ================= */
+
+declare global {
+  interface Window {
+    $crisp?: CrispQueue;
+  }
+}
+
+type CrispCommand =
+  | ["do", "chat:open"]
+  | ["do", "chat:show"]
+  | ["do", "chat:hide"];
+
+type CrispQueue = {
+  push: (...args: CrispCommand[]) => number;
+};
+
+function openCrispChat() {
+  const crisp = window.$crisp;
+  if (!crisp) return;
+  crisp.push(["do", "chat:open"]);
+}
+
+/* ================= Types ================= */
+
 type LineaCredito = {
   id: number;
   title: string;
@@ -92,7 +117,10 @@ const lineasCredito: LineaCredito[] = [
     icon: MilitaryTechOutlinedIcon,
     href: "/creditos/fuerzas",
     image: "/fuerzas2.webp",
-    requirements: ["Consultar organismos vigentes", "No superar 30 años de servicios"],
+    requirements: [
+      "Consultar organismos vigentes",
+      "Para Activos: no superar 30 años de servicios",
+    ],
   },
   {
     id: 6,
@@ -348,10 +376,14 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
           const isOpen = openId === item.id;
 
           return (
-            <div key={item.id} data-slide-card="true" className="min-w-[calc((100%-64px)/3)]">
+            <div
+              key={item.id}
+              data-slide-card="true"
+              className="min-w-[calc((100%-64px)/3)]"
+            >
               <Paper
                 variant="outlined"
-                className="h-[410px] bg-card-surface border border-border-soft rounded-none overflow-hidden hover:shadow-hero transition-shadow"
+                className="h-[430px] bg-card-surface border border-border-soft rounded-none overflow-hidden hover:shadow-hero transition-shadow"
               >
                 <div
                   role="button"
@@ -375,16 +407,28 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
                     </div>
                   )}
 
-                  <div className={["p-8 flex flex-col", isOpen ? "h-[410px]" : "h-[230px]"].join(" ")}>
+                  <div
+                    className={[
+                      "p-8 flex flex-col",
+                      isOpen ? "h-[430px]" : "h-[250px]",
+                    ].join(" ")}
+                  >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex flex-col">
-                        <span className="text-heading-1 text-text-primary">{item.title}</span>
-                        <span className="text-body text-text-secondary mt-2">{item.subtitle}</span>
+                        <span className="text-heading-1 text-text-primary">
+                          {item.title}
+                        </span>
+                        <span className="text-body text-text-secondary mt-2">
+                          {item.subtitle}
+                        </span>
                       </div>
 
                       <ArrowForwardIosIcon
                         className="text-accent-orange transition-transform"
-                        sx={{ fontSize: 18, transform: isOpen ? "rotate(90deg)" : "rotate(0deg)" }}
+                        sx={{
+                          fontSize: 18,
+                          transform: isOpen ? "rotate(90deg)" : "rotate(0deg)",
+                        }}
                         aria-hidden="true"
                       />
                     </div>
@@ -397,18 +441,32 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
 
                     {isOpen && (
                       <div className="mt-4 border-t border-border-soft pt-4 flex flex-col flex-1 min-h-0">
-                        <p className="text-body-bold text-text-primary">REQUISITOS</p>
+                        <p className="text-body-bold text-text-primary">
+                          REQUISITOS
+                        </p>
 
                         <div className="mt-3 flex-1 min-h-0 overflow-y-auto pr-2 card-req-scroll">
                           <ul className="space-y-3">
                             {item.requirements.map((req, idx) => (
-                              <li key={idx} className="flex gap-3 text-body text-text-secondary">
+                              <li
+                                key={idx}
+                                className="flex gap-3 text-body text-text-secondary"
+                              >
                                 <span className="mt-[0.55rem] h-2 w-2 rounded-full bg-accent-orange shrink-0" />
                                 <span>{req}</span>
                               </li>
                             ))}
                           </ul>
                         </div>
+                      </div>
+                    )}
+
+                    {/* CTA Chat (solo cuando está abierta) */}
+                    {isOpen && (
+                      <div className="mt-6">
+                        <Button onClick={openCrispChat} className="w-full">
+                          Iniciar chat
+                        </Button>
                       </div>
                     )}
 
@@ -443,7 +501,6 @@ function CreditLineModal({
 }) {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const [showHint, setShowHint] = useState(false);
-
   const [animateIn, setAnimateIn] = useState(false);
 
   const computeHint = () => {
@@ -468,9 +525,6 @@ function CreditLineModal({
     return () => window.cancelAnimationFrame(id);
   }, [open, line?.id]);
 
-  // Animación de entrada sin warning del linter:
-  // - Se activa visible en el próximo frame
-  // - Se resetea al desmontar/cerrar
   useEffect(() => {
     if (!open) return;
 
@@ -484,7 +538,6 @@ function CreditLineModal({
     };
   }, [open, line?.id]);
 
-  // Mantener montado mientras anima salida
   if (!line) return null;
   if (!open && !closing) return null;
 
@@ -558,7 +611,7 @@ function CreditLineModal({
         </div>
 
         <div className="absolute bottom-0 left-0 right-0 px-6 pb-8 pt-4 flex justify-center bg-text-primary">
-          <Button disabled className="w-full max-w-[240px]">
+          <Button onClick={openCrispChat} className="w-full max-w-[240px]">
             Iniciar chat
           </Button>
         </div>

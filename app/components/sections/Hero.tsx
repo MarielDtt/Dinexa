@@ -3,37 +3,19 @@
 import Button from "../ui/Button";
 import Image from "next/image";
 
-declare global {
-  interface Window {
-    $crisp?: CrispQueue;
-  }
+function openCrispChat() {
+  if (typeof window === "undefined") return;
+  window.$crisp?.push(["do", "chat:open"]);
 }
 
-type CrispCommand = [string, string] | [string, string, string] | [string, string, Record<string, unknown>];
-type CrispQueue = {
-  push: (...args: CrispCommand[]) => number;
-};
-
 export default function Hero() {
-  const handleOpenChat = () => {
-    const crisp = window.$crisp;
-
-    // Si Crisp todavía no cargó, evitamos romper y dejamos pista en consola
-    if (!crisp) {
-      console.warn("Crisp no está disponible todavía (window.$crisp).");
-      return;
-    }
-
-    crisp.push(["do", "chat:open"]);
-  };
-
   return (
     <section className="w-full bg-background-default shadow-[0_4px_4px_rgba(0,0,0,0.25)] lg:shadow-none">
       {/* Container: mobile full + padding, desktop centrado */}
       <div
         className="min-h-[60vh] px-4 py-10 flex flex-col justify-center gap-4
-                      lg:max-w-[1200px] lg:mx-auto lg:min-h-[70vh]
-                      lg:grid lg:grid-cols-2 lg:items-start lg:gap-12 lg:px-8 lg:py-8"
+                  lg:max-w-[1200px] lg:mx-auto lg:min-h-[70vh]
+                  lg:grid lg:grid-cols-2 lg:items-start lg:gap-12 lg:px-8 lg:py-8"
       >
         {/* Columna izquierda: texto */}
         <div className="flex flex-col gap-4 lg:py-8">
@@ -44,7 +26,7 @@ export default function Hero() {
           </h1>
 
           {/* Imagen subrayado */}
-          <div className="hidden lg:block ">
+          <div className="hidden lg:block">
             <Image
               src="/subrayado.webp"
               alt=""
@@ -58,9 +40,9 @@ export default function Hero() {
             Asesoramiento personalizado y gestión simple durante todo el proceso.
           </p>
 
-          {/* CTA: centrado en mobile, alineado a la izquierda en desktop */}
+          {/* CTA */}
           <div className="w-full flex justify-center lg:justify-start">
-            <Button onClick={handleOpenChat}>Comunicate con nosotros</Button>
+            <Button onClick={openCrispChat}>Comunicate con nosotros</Button>
           </div>
         </div>
 
