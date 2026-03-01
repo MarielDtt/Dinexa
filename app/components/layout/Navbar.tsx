@@ -45,11 +45,17 @@ export default function Navbar() {
 
   const handleCloseMenu = () => setIsMenuOpen(false);
 
+  // 👉 NUEVO: abre Crisp
+  const handleOpenChat = () => {
+    if (typeof window === "undefined") return;
+    window.$crisp?.push(["do", "chat:open"]);
+  };
+
   return (
     <nav className="relative sticky top-0 z-50 w-full bg-background-default">
-      {/* CONTAINER (mobile full width + padding, desktop centrado a 1440) */}
+      {/* CONTAINER */}
       <div className="w-full px-4 pt-2 pb-4 flex items-center justify-between lg:max-w-[1200px] lg:mx-auto lg:px-8">
-        {/* LOGO (izquierda) */}
+        {/* LOGO */}
         <div className="flex items-center">
           <Image
             src="/Dinexa.webp"
@@ -60,7 +66,7 @@ export default function Navbar() {
           />
         </div>
 
-        {/* LINKS (centro, solo desktop) */}
+        {/* LINKS (desktop) */}
         <div className="hidden lg:flex flex-1 items-center justify-center gap-6">
           <a
             href="#inicio"
@@ -129,9 +135,14 @@ export default function Navbar() {
           </a>
         </div>
 
-        {/* BOTÓN (derecha, solo desktop) */}
+        {/* BOTÓN (desktop) */}
         <div className="hidden lg:block">
-          <Button className="w-[160px] h-12 !px-6 text-body">Contactar</Button>
+          <Button
+            onClick={handleOpenChat}
+            className="w-[160px] h-12 !px-6 text-body"
+          >
+            Contactar
+          </Button>
         </div>
 
         {/* HAMBURGUESA (mobile) */}
@@ -151,7 +162,7 @@ export default function Navbar() {
         )}
       </div>
 
-      {/* bottom inner shadow (full width) */}
+      {/* bottom inner shadow */}
       <div className="absolute inset-0 pointer-events-none rounded-[inherit] shadow-[inset_0px_-1px_0px_0px_#d6ddeb]" />
     </nav>
   );
