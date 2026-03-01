@@ -21,27 +21,17 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Paper } from "@mui/material";
 import Button from "../ui/Button";
 
-/* ================= Crisp: types + helper (sin any) ================= */
 
-declare global {
-  interface Window {
-    $crisp?: CrispQueue;
-  }
-}
+const WHATSAPP_NUMBER = "5491161076870";
+function openWhatsAppFor(lineTitle: string) {
+  if (typeof window === "undefined") return;
 
-type CrispCommand =
-  | ["do", "chat:open"]
-  | ["do", "chat:show"]
-  | ["do", "chat:hide"];
+  const message = `Solicito información de ${lineTitle}.`;
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+    message
+  )}`;
 
-type CrispQueue = {
-  push: (...args: CrispCommand[]) => number;
-};
-
-function openCrispChat() {
-  const crisp = window.$crisp;
-  if (!crisp) return;
-  crisp.push(["do", "chat:open"]);
+  window.open(url, "_blank", "noopener,noreferrer");
 }
 
 /* ================= Types ================= */
@@ -461,11 +451,12 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
                       </div>
                     )}
 
-                    {/* CTA Chat (solo cuando está abierta) */}
+              
                     {isOpen && (
                       <div className="mt-6">
-                        <Button onClick={openCrispChat} className="w-full">
-                          Iniciar chat
+                        <Button onClick={() => openWhatsAppFor(item.title)} className="w-full">
+
+                          Solicitar información
                         </Button>
                       </div>
                     )}
@@ -611,8 +602,8 @@ function CreditLineModal({
         </div>
 
         <div className="absolute bottom-0 left-0 right-0 px-6 pb-8 pt-4 flex justify-center bg-text-primary">
-          <Button onClick={openCrispChat} className="w-full max-w-[240px]">
-            Iniciar chat
+          <Button onClick={() => openWhatsAppFor(line.title)} className="w-full max-w-[240px]">
+            Contactar por WhatsApp
           </Button>
         </div>
       </div>
