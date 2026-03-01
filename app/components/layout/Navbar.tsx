@@ -125,7 +125,7 @@ export default function Navbar() {
                 : "text-text-primary border-transparent hover:text-accent-hover"
             }`}
           >
-            Contactos
+            Contacto
           </a>
         </div>
 
