@@ -21,47 +21,56 @@ img {
   display: block;
 }
 
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 
 /* ========================= */
 /*        CRISP CHAT         */
 /* ========================= */
 
-/* Variables ajustables */
 :root {
-  --crisp-bottom-mobile: 460px;      /* Mucho más arriba en mobile */
-  --crisp-bottom-desktop: 460px;     /* Más arriba en desktop */
   --crisp-right-mobile: 16px;
-  --crisp-right-desktop: calc((100vw - 1200px) / 2 + 64px); 
-  /* Más a la derecha en desktop */
+  --crisp-bottom-mobile: 120px; /* Ajustable */
+
+  --crisp-right-desktop: 24px;
 }
 
-/* Siempre visible por encima */
+/* Solo aseguramos que esté por encima */
 #crisp-chatbox,
 .crisp-client {
   z-index: 999999 !important;
-  left: auto !important;
-  transform: none !important;
 }
+
+/* 🔴 IMPORTANTE:
+   NO tocamos #crisp-chatbox con top/bottom/translate.
+   Solo movemos el botón (launcher).
+*/
 
 /* MOBILE */
 @media (max-width: 1023px) {
-  #crisp-chatbox,
-  .crisp-client,
-  .crisp-client [class*="cc-"] {
+  .crisp-client .cc-1m3a,
+  .crisp-client .cc-kegp {
     right: var(--crisp-right-mobile) !important;
+    left: auto !important;
     bottom: var(--crisp-bottom-mobile) !important;
+    top: auto !important;
   }
 }
 
 /* DESKTOP */
 @media (min-width: 1024px) {
-  #crisp-chatbox,
-  .crisp-client,
-  .crisp-client [class*="cc-"] {
-    right: 24px !important;   /* Pegado al borde derecho */
-    bottom: 340px !important; /* La altura que ya definiste */
+  .crisp-client .cc-1m3a,
+  .crisp-client .cc-kegp {
+    right: var(--crisp-right-desktop) !important;
+    left: auto !important;
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
   }
 }
