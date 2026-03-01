@@ -5,14 +5,12 @@ import { useState, useEffect } from "react";
 import MenuOverlay from "./MenuOverlay";
 import Button from "../ui/Button";
 
-const sections = [
-  "inicio",
-  "linea",
-  "entidades",
-  "pasos",
-  "quienes-somos",
-  "contacto",
-];
+const sections = ["inicio", "linea", "entidades", "pasos", "quienes-somos", "contacto"];
+
+
+const WHATSAPP_NUMBER = "+5491161076870"; 
+
+const WHATSAPP_MESSAGE = "Desde Contactar me gustaria tener mas informacion";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,10 +27,7 @@ export default function Navbar() {
       (entries) => {
         const visible = entries
           .filter((e) => e.isIntersecting)
-          .sort(
-            (a, b) =>
-              (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0)
-          )[0];
+          .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
 
         if (visible?.target?.id) setActiveSection(visible.target.id);
       },
@@ -45,32 +40,28 @@ export default function Navbar() {
 
   const handleCloseMenu = () => setIsMenuOpen(false);
 
-  // 👉 NUEVO: abre Crisp
-  const handleOpenChat = () => {
+  // ✅ NUEVO: abre WhatsApp
+  const handleOpenWhatsApp = () => {
     if (typeof window === "undefined") return;
-    window.$crisp?.push(["do", "chat:open"]);
+
+    const text = encodeURIComponent(WHATSAPP_MESSAGE);
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
     <nav className="relative sticky top-0 z-50 w-full bg-background-default">
-      {/* CONTAINER */}
       <div className="w-full px-4 pt-2 pb-4 flex items-center justify-between lg:max-w-[1200px] lg:mx-auto lg:px-8">
-        {/* LOGO */}
         <div className="flex items-center">
-          <Image
-            src="/Dinexa.webp"
-            alt="Dinexa Logo"
-            width={94}
-            height={36}
-            priority
-          />
+          <Image src="/Dinexa.webp" alt="Dinexa Logo" width={94} height={36} priority />
         </div>
 
-        {/* LINKS (desktop) */}
         <div className="hidden lg:flex flex-1 items-center justify-center gap-6">
           <a
             href="#inicio"
-            className={`text-body border-b-2 ${
+            onClick={() => setActiveSection("inicio")}
+            className={`text-body border-b-2 transition-colors transition-border ${
               activeSection === "inicio"
                 ? "text-accent-orange border-accent-orange"
                 : "text-text-primary border-transparent hover:text-accent-hover"
@@ -81,7 +72,8 @@ export default function Navbar() {
 
           <a
             href="#linea"
-            className={`text-body border-b-2 ${
+            onClick={() => setActiveSection("linea")}
+            className={`text-body border-b-2 transition-colors transition-border ${
               activeSection === "linea"
                 ? "text-accent-orange border-accent-orange"
                 : "text-text-primary border-transparent hover:text-accent-hover"
@@ -92,7 +84,8 @@ export default function Navbar() {
 
           <a
             href="#entidades"
-            className={`text-body border-b-2 ${
+            onClick={() => setActiveSection("entidades")}
+            className={`text-body border-b-2 transition-colors transition-border ${
               activeSection === "entidades"
                 ? "text-accent-orange border-accent-orange"
                 : "text-text-primary border-transparent hover:text-accent-hover"
@@ -103,7 +96,8 @@ export default function Navbar() {
 
           <a
             href="#pasos"
-            className={`text-body border-b-2 ${
+            onClick={() => setActiveSection("pasos")}
+            className={`text-body border-b-2 transition-colors transition-border ${
               activeSection === "pasos"
                 ? "text-accent-orange border-accent-orange"
                 : "text-text-primary border-transparent hover:text-accent-hover"
@@ -114,7 +108,8 @@ export default function Navbar() {
 
           <a
             href="#quienes-somos"
-            className={`text-body border-b-2 ${
+            onClick={() => setActiveSection("quienes-somos")}
+            className={`text-body border-b-2 transition-colors transition-border ${
               activeSection === "quienes-somos"
                 ? "text-accent-orange border-accent-orange"
                 : "text-text-primary border-transparent hover:text-accent-hover"
@@ -125,7 +120,8 @@ export default function Navbar() {
 
           <a
             href="#contacto"
-            className={`text-body border-b-2 ${
+            onClick={() => setActiveSection("contacto")}
+            className={`text-body border-b-2 transition-colors transition-border ${
               activeSection === "contacto"
                 ? "text-accent-orange border-accent-orange"
                 : "text-text-primary border-transparent hover:text-accent-hover"
@@ -135,17 +131,13 @@ export default function Navbar() {
           </a>
         </div>
 
-        {/* BOTÓN (desktop) */}
+        {/* ✅ BOTÓN (desktop) ahora WhatsApp */}
         <div className="hidden lg:block">
-          <Button
-            onClick={handleOpenChat}
-            className="w-[160px] h-12 !px-6 text-body"
-          >
+          <Button onClick={handleOpenWhatsApp} className="w-[160px] h-12 !px-6 text-body">
             Contactar
           </Button>
         </div>
 
-        {/* HAMBURGUESA (mobile) */}
         <button
           className="w-9 h-9 flex items-center justify-center bg-card-surface border border-accent-orange rounded-full lg:hidden"
           aria-label="Abrir menú"
@@ -154,7 +146,6 @@ export default function Navbar() {
           <Image src="/menu-icon.svg" alt="Menú" width={16.67} height={10} />
         </button>
 
-        {/* OVERLAY (mobile) */}
         {isMenuOpen && (
           <div className="absolute top-full right-0 z-50 lg:hidden">
             <MenuOverlay onClose={handleCloseMenu} />
@@ -162,7 +153,6 @@ export default function Navbar() {
         )}
       </div>
 
-      {/* bottom inner shadow */}
       <div className="absolute inset-0 pointer-events-none rounded-[inherit] shadow-[inset_0px_-1px_0px_0px_#d6ddeb]" />
     </nav>
   );
