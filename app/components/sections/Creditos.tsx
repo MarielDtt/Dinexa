@@ -2,7 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { FamilyRestroomOutlined, type SvgIconComponent } from "@mui/icons-material";
+import {
+  FamilyRestroomOutlined,
+  type SvgIconComponent,
+} from "@mui/icons-material";
 
 import AccountBalanceOutlinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
@@ -104,7 +107,7 @@ const lineasCredito: LineaCredito[] = [
       "Edad: Mujeres hasta 58 años / Varones hasta 63 años",
     ],
   },
-    {
+  {
     id: 7,
     title: "AUH",
     subtitle: "Asignación Universal por Hijo",
@@ -126,7 +129,11 @@ export default function Creditos() {
 
   const openModal = (item: LineaCredito) => {
     // Desktop: NO modal/overlay
-    if (typeof window !== "undefined" && window.matchMedia("(min-width: 1024px)").matches) return;
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(min-width: 1024px)").matches
+    )
+      return;
 
     setIsClosing(false);
     setSelectedLine(item);
@@ -186,11 +193,19 @@ export default function Creditos() {
                   </div>
 
                   <div className="flex flex-col">
-                    <span className="text-body-bold text-text-primary">{item.title}</span>
-                    <span className="text-small-md text-text-secondary">{item.subtitle}</span>
+                    <span className="text-body-bold text-text-primary">
+                      {item.title}
+                    </span>
+                    <span className="text-small-md text-text-secondary">
+                      {item.subtitle}
+                    </span>
                   </div>
 
-                  <ArrowForwardIosIcon className="ml-auto text-accent-orange" sx={{ fontSize: 18 }} />
+                  <ArrowForwardIosIcon
+                    className="ml-auto text-accent-orange"
+                    sx={{ fontSize: 18 }}
+                    aria-hidden="true"
+                  />
                 </a>
               );
             })}
@@ -204,7 +219,12 @@ export default function Creditos() {
       </div>
 
       {/* MODAL (solo mobile) */}
-      <CreditLineModal open={isModalOpen} closing={isClosing} line={selectedLine} onClose={closeModal} />
+      <CreditLineModal
+        open={isModalOpen}
+        closing={isClosing}
+        line={selectedLine}
+        onClose={closeModal}
+      />
 
       {/* SCROLLBAR HIDE (slider desktop horizontal) */}
       <style jsx global>{`
@@ -287,7 +307,10 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
     const gap = 32;
     const amount = cardWidth + gap;
 
-    el.scrollBy({ left: dir === "left" ? -amount : amount, behavior: "smooth" });
+    el.scrollBy({
+      left: dir === "left" ? -amount : amount,
+      behavior: "smooth",
+    });
   };
 
   const toggle = (id: number) => setOpenId((prev) => (prev === id ? null : id));
@@ -297,20 +320,22 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
       {canLeft && (
         <button
           type="button"
+          aria-label="Ver opciones anteriores"
           onClick={() => scrollByCard("left")}
           className="absolute left-0 top-1/2 -translate-y-1/2 z-20 h-11 w-11 rounded-full border border-border-soft bg-card-surface shadow-md flex items-center justify-center hover:scale-105 transition-transform"
         >
-          <ChevronLeftIcon className="text-text-primary" />
+          <ChevronLeftIcon className="text-text-primary" aria-hidden="true" />
         </button>
       )}
 
       {canRight && (
         <button
           type="button"
+          aria-label="Ver más opciones"
           onClick={() => scrollByCard("right")}
           className="absolute right-0 top-1/2 -translate-y-1/2 z-20 h-11 w-11 rounded-full border border-border-soft bg-card-surface shadow-md flex items-center justify-center hover:scale-105 transition-transform"
         >
-          <ChevronRightIcon className="text-text-primary" />
+          <ChevronRightIcon className="text-text-primary" aria-hidden="true" />
         </button>
       )}
 
@@ -360,6 +385,7 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
                       <ArrowForwardIosIcon
                         className="text-accent-orange transition-transform"
                         sx={{ fontSize: 18, transform: isOpen ? "rotate(90deg)" : "rotate(0deg)" }}
+                        aria-hidden="true"
                       />
                     </div>
 
@@ -395,7 +421,9 @@ function DesktopSlider({ items }: { items: typeof lineasCredito }) {
         })}
       </div>
 
-      <p className="mt-2 text-small-sm text-text-secondary">Usá las flechas para ver más opciones.</p>
+      <p className="mt-2 text-small-sm text-text-secondary">
+        Usá las flechas para ver más opciones.
+      </p>
     </div>
   );
 }
@@ -463,7 +491,11 @@ function CreditLineModal({
   const isVisible = open && animateIn && !closing;
 
   return (
-    <div className="fixed inset-0 z-[999] flex items-start justify-center pt-16 px-4" role="dialog" aria-modal="true">
+    <div
+      className="fixed inset-0 z-[999] flex items-start justify-center pt-16 px-4"
+      role="dialog"
+      aria-modal="true"
+    >
       <button
         type="button"
         aria-label="Cerrar"
@@ -479,7 +511,9 @@ function CreditLineModal({
         className={[
           "relative w-[355px] h-[410px] rounded-[8px] bg-text-primary overflow-hidden",
           "transition-all duration-300 ease-out will-change-transform",
-          isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-6 scale-[0.96]",
+          isVisible
+            ? "opacity-100 translate-y-0 scale-100"
+            : "opacity-0 translate-y-6 scale-[0.96]",
         ].join(" ")}
       >
         <div className="px-6 pt-6 pb-4 relative">
@@ -489,7 +523,7 @@ function CreditLineModal({
             aria-label="Cerrar modal"
             className="absolute right-4 top-4 text-accent-orange hover:opacity-80 transition-opacity"
           >
-            <CloseIcon />
+            <CloseIcon aria-hidden="true" />
           </button>
 
           <h2 className="text-heading-1 text-text-inverse">{line.title}</h2>
@@ -497,7 +531,11 @@ function CreditLineModal({
         </div>
 
         <div className="relative px-6">
-          <div ref={scrollRef} onScroll={computeHint} className="h-[250px] overflow-y-auto pr-2 modal-scroll">
+          <div
+            ref={scrollRef}
+            onScroll={computeHint}
+            className="h-[250px] overflow-y-auto pr-2 modal-scroll"
+          >
             <p className="text-body-bold text-text-inverse mt-4">REQUISITOS</p>
 
             <ul className="mt-4 space-y-4 pb-16">
@@ -511,7 +549,9 @@ function CreditLineModal({
 
             {showHint && (
               <div className="pb-2">
-                <p className="text-small-sm text-text-inverse/70 text-center">Deslizá para ver más ↓</p>
+                <p className="text-small-sm text-text-inverse/70 text-center">
+                  Deslizá para ver más ↓
+                </p>
               </div>
             )}
           </div>

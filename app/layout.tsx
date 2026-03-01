@@ -33,7 +33,10 @@ export default function RootLayout({
         <div className="min-h-screen bg-background-default text-text-primary">
           <ThemeRegistry>
             <Navbar />
-            {children}
+
+            {/* Landmark principal para accesibilidad */}
+            <main id="main-content">{children}</main>
+
             <Footer />
 
             {crispId ? (
