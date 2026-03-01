@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import ThemeRegistry from "@/theme/ThemeRegistry";
+// import ThemeRegistry from "@/theme/ThemeRegistry";
 import Navbar from "./components/layout/Navbar";
 import { Poppins } from "next/font/google";
 import Footer from "./components/layout/Footer";
@@ -31,7 +31,7 @@ export default function RootLayout({
     <html lang="es">
       <body className={`antialiased ${poppins.variable} font-sans`}>
         <div className="min-h-screen bg-background-default text-text-primary">
-          <ThemeRegistry>
+          {/* <ThemeRegistry> */}
             <Navbar />
             {children}
             <Footer />
@@ -55,7 +55,7 @@ export default function RootLayout({
                 }}
               />
             ) : null}
-          </ThemeRegistry>
+          {/* </ThemeRegistry> */}
         </div>
       </body>
     </html>
