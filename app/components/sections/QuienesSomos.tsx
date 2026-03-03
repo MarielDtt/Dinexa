@@ -117,7 +117,7 @@ export default function QuienesSomos() {
     <section className="w-full bg-background-default px-4 py-10 lg:py-16">
       <div className="w-full lg:max-w-[1000px] lg:mx-auto flex flex-col gap-6">
         <h2 className="text-text-primary text-heading-1">
-          Quienes <span className="text-accent-blue">somos</span>
+          Quiénes <span className="text-accent-blue">somos</span>
         </h2>
 
         <div className="relative">

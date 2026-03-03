@@ -24,10 +24,10 @@ export default function TerminosCondiciones() {
                 {/* 2 */}
                 <div className="flex flex-col gap-2">
                     <h2 className="text-body font-semibold text-text-primary">
-                        2. Sobre Dinexa
+                        2. Sobre Dinexa S.F
                     </h2>
                     <p className="text-body text-text-secondary">
-                        Dinexa es un servicio de asesoramiento orientado a personas jubiladas,
+                        Dinexa S.F es un servicio de asesoramiento orientado a personas jubiladas,
                         pensionadas o en actividad, que buscan información sobre préstamos personales.
                     </p>
                 </div>
@@ -63,7 +63,7 @@ export default function TerminosCondiciones() {
                         5. Limitación de Responsabilidad
                     </h2>
                     <p className="text-body text-text-secondary">
-                        Dinexa no se hace responsable por decisiones tomadas en base al contenido del sitio,
+                        Dinexa S.F no se hace responsable por decisiones tomadas en base al contenido del sitio,
                         ni por posibles errores u omisiones.
                     </p>
                 </div>

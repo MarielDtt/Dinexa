@@ -42,7 +42,7 @@ export default function Entidades() {
 
         <div className="flex justify-center items-center lg:h-20">
           <Image
-            src="/Vento-1.webp"
+            src="/vento-1.webp"
             alt="Vento Capital"
             width={240}
             height={100}

@@ -16,7 +16,7 @@ export default function PoliticasPrivacidad() {
             1. Protección de tu información
           </h2>
           <p className="text-body text-text-secondary">
-            En Dinexa nos tomamos muy en serio tu privacidad. La información personal
+            En Dinexa S.F nos tomamos muy en serio tu privacidad. La información personal
             que ingreses en el sitio será tratada con absoluta confidencialidad.
           </p>
         </div>
